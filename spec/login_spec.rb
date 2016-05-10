@@ -11,6 +11,10 @@ describe '/api/login' do
   it_behaves_like 'json result'
   it_behaves_like 'contains error msg', 'password is missing'
 
+  def api_call *params
+    post "/api/login", *params
+  end
+
   context 'negative tests' do
     context 'missing params' do
       context 'password' do
