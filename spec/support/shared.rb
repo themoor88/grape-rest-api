@@ -26,3 +26,17 @@ RSpec.shared_examples '200' do
     expect(response.status).to eq(200)
   end
 end
+
+RSpec.shared_examples 'restricted for developers' do
+  context 'without developer key' do
+    specify 'should be an unauthorized call' do
+      api_call params
+      expect(response.status).to eq(401)
+    end
+    specify 'error code is 1001' do
+      api_call params
+      json = JSON.parse(response.body)
+      expect(json['error_code']).to eq(ErrorCodes::DEVELOPER_KEY_MISSING)
+    end
+  end
+end
